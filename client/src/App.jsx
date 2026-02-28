@@ -9,6 +9,7 @@ import CheckEmail from './pages/CheckEmail'
 import VerifyEmail from './pages/VerifyEmail'
 import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/ResetPassword'
+import ComponentsDemo from './pages/ComponentsDemo'
 
 export default function App() {
   const dispatch = useDispatch()
@@ -37,6 +38,7 @@ export default function App() {
                 {user.email_verified_at ? null : (
                   <span className="muted"> (unverified)</span>
                 )}
+                <Link to="/components">Components</Link>
                 <button type="button" onClick={handleLogout}>
                   Log out
                 </button>
@@ -45,6 +47,7 @@ export default function App() {
               <>
                 <Link to="/login">Log in</Link>
                 <Link to="/signup">Sign up</Link>
+                <Link to="/components">Components</Link>
               </>
             )
           )}
@@ -58,6 +61,7 @@ export default function App() {
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/components" element={<ComponentsDemo />} />
       </Routes>
     </div>
   )

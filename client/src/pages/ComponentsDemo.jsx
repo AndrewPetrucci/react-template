@@ -1,9 +1,10 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { fetchItems } from '../store/appSlice'
 import Table from '../components/Table'
 
-const COLUMNS = [
+const ITEMS_COLUMNS = [
   { key: 'id', label: 'ID' },
   { key: 'name', label: 'Name' },
   { key: 'created_at', label: 'Created' },
@@ -19,7 +20,7 @@ function formatDate(iso) {
   }
 }
 
-export default function Home() {
+export default function ComponentsDemo() {
   const dispatch = useDispatch()
   const { items, loading, error } = useSelector((state) => state.app)
 
@@ -34,17 +35,25 @@ export default function Home() {
 
   return (
     <main>
-      <h2>Items</h2>
-      {loading && <p>Loading…</p>}
-      {error && <p className="error">{error}</p>}
-      {!loading && !error && (
-        <Table
-          columns={COLUMNS}
-          data={tableData}
-          keyField="id"
-          emptyMessage="No items yet. Add some in the database."
-        />
-      )}
+      <h2>UI components</h2>
+      <p>
+        <Link to="/">← Home</Link>
+      </p>
+
+      <section className="demo-section">
+        <h3>Table</h3>
+        <p>Items from the API rendered in a table.</p>
+        {loading && <p>Loading…</p>}
+        {error && <p className="error">{error}</p>}
+        {!loading && !error && (
+          <Table
+            columns={ITEMS_COLUMNS}
+            data={tableData}
+            keyField="id"
+            emptyMessage="No items yet. Add some in the database."
+          />
+        )}
+      </section>
     </main>
   )
 }

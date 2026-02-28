@@ -106,3 +106,45 @@ li {
   padding: 0.5rem 0;
   border-bottom: 1px solid #eee;
 }
+
+/* Table component */
+.table-wrapper {
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.table th,
+.table td {
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  font-weight: 600;
+  background: #eee;
+}
+
+.table tbody tr:hover {
+  background: #f9f9f9;
+}
+
+.table-empty {
+  margin: 1rem 0;
+  color: #666;
+}
+
+.demo-section {
+  margin-top: 2rem;
+}
+
+.demo-section h3 {
+  margin-top: 0;
+  font-size: 1.25rem;
+}
