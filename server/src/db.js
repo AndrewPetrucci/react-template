@@ -40,10 +40,15 @@ function getConnectionString(connectToDatabase = undefined) {
 
 /** Create the app database if it doesn't exist (connects to 'postgres' to run CREATE DATABASE). */
 export async function ensureDatabase() {
-  // Managed DBs (e.g. Render, Railway) provide the database; skip to avoid permission errors
-  if (process.env.DATABASE_URL) return
-
   let targetDb = process.env.PG_DATABASE ?? 'react_template'
+  if (process.env.DATABASE_URL) {
+    try {
+      const url = new URL(process.env.DATABASE_URL)
+      const dbFromUrl = (url.pathname.slice(1).split('/')[0] || '').trim() || 'postgres'
+      if (dbFromUrl === 'postgres') return
+      targetDb = dbFromUrl
+    } catch (_) {}
+  }
   const client = new pg.Client({
     connectionString: getConnectionString('postgres'),
     ...(process.env.NODE_ENV === 'production' && { ssl: { rejectUnauthorized: false } }),
