@@ -148,3 +148,52 @@ npm run start
 ```
 
 Then open **http://localhost:3001** — the Express server serves both the API and the built React app from `client/dist`. If you run `npm run start` without building first, port 3001 only serves the API (no `GET /`); use **http://localhost:5173** for the app during development.
+
+## Hosting (so others can see it)
+
+You need to run **one Node app** (the server) and give it a **PostgreSQL** database. The server already serves the built React app from `client/dist`, so you don’t deploy the client separately.
+
+### Option 1: Render (free tier)
+
+1. **Push your code** to GitHub (or GitLab).
+2. **Create a PostgreSQL database**  
+   [Render Dashboard](https://dashboard.render.com) → **New +** → **PostgreSQL**. Note the **Internal Database URL** (or External if your app is elsewhere).
+3. **Create a Web Service**  
+   **New +** → **Web Service** → connect your repo.  
+   - **Root Directory:** leave blank.  
+   - **Build Command:** `npm run install:all && npm run build`  
+   - **Start Command:** `npm run start`  
+   - **Instance type:** Free (or paid).
+4. **Environment variables** (in the Web Service → **Environment**):  
+   - `NODE_ENV` = `production`  
+   - `DATABASE_URL` = (paste the Postgres URL from step 2; use **Internal** if app and DB are both on Render)  
+   - `JWT_SECRET` = (generate a long random string, e.g. `openssl rand -hex 32`)  
+   - `APP_URL` = `https://YOUR-SERVICE-NAME.onrender.com` (your Web Service URL; replace with your real URL after first deploy)  
+   - `PORT` = `3001` (or leave unset; Render sets `PORT` for you)
+5. Deploy. After the first deploy, set `APP_URL` to the exact URL Render gives you (for auth links).
+
+### Option 2: Railway
+
+1. Push code to GitHub and open [Railway](https://railway.app).
+2. **New Project** → **Deploy from GitHub** and select the repo.
+3. Add **PostgreSQL**: in the project, **New** → **Database** → **PostgreSQL**. Railway will set `DATABASE_URL` automatically if you add it to the same project.
+4. In your service settings set:  
+   **Build:** `npm run install:all && npm run build`  
+   **Start:** `npm run start`  
+   Add env: `JWT_SECRET`, `APP_URL` = `https://your-app.up.railway.app` (use the URL Railway gives you).
+5. Deploy; then set `APP_URL` to the real public URL.
+
+### Option 3: VPS (DigitalOcean, Linode, etc.)
+
+- Create a droplet/VM, install Node and PostgreSQL.
+- Clone the repo, run `npm run install:all`, `npm run build`, then `npm run start` (e.g. with `pm2` or systemd).
+- Set env in `server/.env` or systemd: `DATABASE_URL`, `JWT_SECRET`, `APP_URL`, `PORT`.
+- Put a reverse proxy (e.g. nginx) in front and use SSL (e.g. Let’s Encrypt).
+
+### Checklist for any host
+
+- **Build** the client before starting: `npm run build` (so `client/dist` exists). The server serves it automatically.
+- **APP_URL** must be the exact URL people use (e.g. `https://myapp.onrender.com`) so verification and reset links work.
+- **JWT_SECRET** must be a strong random value in production.
+- **Database:** use the host’s Postgres URL; the server runs migrations (ensureSchema) on startup.
+- Optional: set **SMTP** env vars so verification and password-reset emails are sent.
