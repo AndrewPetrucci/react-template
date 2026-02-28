@@ -20,16 +20,19 @@ const tableSchemas = [
 ]
 
 function getConnectionString(connectToDatabase = undefined) {
-  const db = connectToDatabase ?? process.env.PG_DATABASE ?? 'postgres'
   if (process.env.DATABASE_URL) {
     try {
       const url = new URL(process.env.DATABASE_URL)
-      url.pathname = '/' + (db || 'postgres')
+      // Only override database when explicitly requested (e.g. ensureDatabase connecting to 'postgres')
+      if (connectToDatabase !== undefined) {
+        url.pathname = '/' + (connectToDatabase || 'postgres')
+      }
       return url.toString()
     } catch (_) {
       return process.env.DATABASE_URL
     }
   }
+  const db = connectToDatabase ?? process.env.PG_DATABASE ?? 'postgres'
   const user = process.env.PG_USER ?? 'postgres'
   const password = process.env.PG_PASSWORD ?? ''
   const host = process.env.PG_HOST ?? 'localhost'
