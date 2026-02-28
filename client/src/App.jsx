@@ -1,37 +1,64 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
+import { Routes, Route, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchItems } from './store/appSlice'
+import { fetchMe, logout } from './store/authSlice'
+import Home from './pages/Home'
+import Signup from './pages/Signup'
+import Login from './pages/Login'
+import CheckEmail from './pages/CheckEmail'
+import VerifyEmail from './pages/VerifyEmail'
+import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
 
-function App() {
+export default function App() {
   const dispatch = useDispatch()
-  const { items, loading, error } = useSelector((state) => state.app)
+  const { user, meChecked } = useSelector((state) => state.auth)
+  const meFetchedRef = useRef(false)
 
   useEffect(() => {
-    dispatch(fetchItems())
+    if (meFetchedRef.current) return
+    meFetchedRef.current = true
+    dispatch(fetchMe())
   }, [dispatch])
+
+  const handleLogout = () => dispatch(logout())
 
   return (
     <div className="app">
       <header>
-        <h1>React Redux PostgreSQL</h1>
-      </header>
-      <main>
-        {loading && <p>Loading…</p>}
-        {error && <p className="error">{error}</p>}
-        {!loading && !error && (
-          <ul>
-            {items.length === 0 ? (
-              <li>No items yet. Add some in the database.</li>
+        <h1>
+          <Link to="/">React Redux PostgreSQL</Link>
+        </h1>
+        <nav>
+          {meChecked && (
+            user ? (
+              <>
+                <span>{user.email}</span>
+                {user.email_verified_at ? null : (
+                  <span className="muted"> (unverified)</span>
+                )}
+                <button type="button" onClick={handleLogout}>
+                  Log out
+                </button>
+              </>
             ) : (
-              items.map((item) => (
-                <li key={item.id}>{item.name || item.title}</li>
-              ))
-            )}
-          </ul>
-        )}
-      </main>
+              <>
+                <Link to="/login">Log in</Link>
+                <Link to="/signup">Sign up</Link>
+              </>
+            )
+          )}
+        </nav>
+      </header>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/check-email" element={<CheckEmail />} />
+        <Route path="/verify-email" element={<VerifyEmail />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+      </Routes>
     </div>
   )
 }
-
-export default App

@@ -1,7 +1,23 @@
 import pg from 'pg'
-import { createTableSql, seedRows } from './schema/items/index.js'
+import * as itemsSchema from './schema/items/index.js'
+import * as usersSchema from './schema/users/index.js'
 
 const { Pool } = pg
+
+const tableSchemas = [
+  {
+    createTableSql: itemsSchema.createTableSql,
+    tableName: itemsSchema.tableName,
+    seedColumns: ['name'],
+    seedRows: itemsSchema.seedRows,
+  },
+  {
+    createTableSql: usersSchema.createTableSql,
+    tableName: usersSchema.tableName,
+    seedColumns: null,
+    seedRows: usersSchema.seedRows ?? [],
+  },
+]
 
 function getConnectionString(connectToDatabase = undefined) {
   const db = connectToDatabase ?? process.env.PG_DATABASE ?? 'postgres'
@@ -52,15 +68,30 @@ export async function ensureDatabase() {
   }
 }
 
-/** Create the items table (and seed once) if it doesn't exist. */
+/** Create tables (and seed once) from registered schemas. */
 export async function ensureSchema() {
-  await pool.query(createTableSql)
-  const { rows } = await pool.query('SELECT 1 FROM items LIMIT 1')
-  if (rows.length === 0) {
-    for (const [name] of seedRows) {
-      await pool.query('INSERT INTO items (name) VALUES ($1)', [name])
+  for (const { createTableSql, tableName, seedColumns, seedRows } of tableSchemas) {
+    await pool.query(createTableSql)
+    if (tableName === usersSchema.tableName) {
+      try {
+        await pool.query('ALTER TABLE users ALTER COLUMN password_hash DROP NOT NULL')
+      } catch (_) {
+        // Column already nullable or table new
+      }
     }
-    console.log('Seeded items table')
+    if (seedColumns?.length && seedRows?.length) {
+      const { rows } = await pool.query(`SELECT 1 FROM ${tableName} LIMIT 1`)
+      if (rows.length === 0) {
+        for (const row of seedRows) {
+          const placeholders = row.map((_, i) => `$${i + 1}`).join(', ')
+          await pool.query(
+            `INSERT INTO ${tableName} (${seedColumns.join(', ')}) VALUES (${placeholders})`,
+            row
+          )
+        }
+        console.log(`Seeded ${tableName} table`)
+      }
+    }
   }
 }
 

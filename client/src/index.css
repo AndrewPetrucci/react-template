@@ -18,14 +18,82 @@ body {
   padding: 2rem;
 }
 
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
 header h1 {
-  margin: 0 0 1.5rem;
+  margin: 0;
   font-size: 1.5rem;
   font-weight: 600;
 }
 
+header h1 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+header nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+header nav a,
+header nav button {
+  font: inherit;
+  color: #056;
+}
+
+header nav button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.muted {
+  color: #666;
+  font-size: 0.9em;
+}
+
 .error {
   color: #c00;
+}
+
+form div {
+  margin-bottom: 1rem;
+}
+
+form label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}
+
+form input {
+  width: 100%;
+  max-width: 20rem;
+  padding: 0.5rem;
+  font: inherit;
+}
+
+form button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  font: inherit;
+  cursor: pointer;
+}
+
+form button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 ul {

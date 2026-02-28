@@ -59,6 +59,23 @@ Edit `server/.env` with either:
 
 Also set `PORT=3001` (optional) for the API server.
 
+For **auth** (signup, login, email verification, password reset), set in `server/.env`:
+
+- **`JWT_SECRET`** — Secret for signing JWTs (use a long random string in production).
+- **`APP_URL`** — Base URL where users open the app (for verification and reset links). In **development** use `http://localhost:5173` (Vite). In **production** use your app URL (e.g. `http://localhost:3001` if you serve the built app from Express, or `https://yourdomain.com`).
+- **SMTP** (optional) — If set, verification and password-reset emails are sent. Set `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, and optionally `SMTP_FROM`. Without SMTP, signup and login still work; verification emails are skipped.
+
+## Auth (signup, email verification, password reset)
+
+- **Sign up** — `POST /api/auth/signup` with `{ email, password }`. Creates user and sends verification email (if SMTP is configured). Returns `{ user, token }`.
+- **Log in** — `POST /api/auth/login` with `{ email, password }`. Returns `{ user, token }`.
+- **Me** — `GET /api/auth/me` with `Authorization: Bearer <token>` returns `{ user }` or `{ user: null }`.
+- **Verify email** — User clicks link in email; `POST /api/auth/verify-email` with `{ token }` (or `?token=`). Sets `email_verified_at` on the user.
+- **Forgot password** — `POST /api/auth/forgot-password` with `{ email }`. Sends reset link by email (if SMTP configured).
+- **Reset password** — User clicks link; `POST /api/auth/reset-password` with `{ token, newPassword }`.
+
+Frontend routes: `/signup`, `/login`, `/verify-email?token=`, `/forgot-password`, `/reset-password?token=`. Token is stored in `localStorage` and sent as `Authorization: Bearer` on API requests.
+
 ## Server schema
 
 Table definitions live under `server/src/schema/`. Each table has a folder (e.g. `items/`) with an `index.js` that defines the table and reuses shared helpers.

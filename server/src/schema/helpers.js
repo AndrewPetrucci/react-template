@@ -78,6 +78,7 @@ export function generateCreateTableSql(tableName, columns) {
     const parts = [`${col.name} ${col.type}`]
     if (col.isNull === false) parts.push('NOT NULL')
     if (col.isPrimaryKey) parts.push('PRIMARY KEY')
+    if (col.isUnique) parts.push('UNIQUE')
     if (col.isDefault && col.defaultExpr) parts.push(`DEFAULT ${col.defaultExpr}`)
     return parts.join(' ')
   }).filter(Boolean)
