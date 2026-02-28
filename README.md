@@ -161,7 +161,7 @@ You need to run **one Node app** (the server) and give it a **PostgreSQL** datab
 3. **Create a Web Service**  
    **New +** → **Web Service** → connect your repo.  
    - **Root Directory:** leave blank.  
-   - **Build Command:** `npm run install:all && npm run build`  
+   - **Build Command:** `npm run install:all && npm run build` (install:all installs client with devDependencies so Vite is available when Render sets NODE_ENV=production)  
    - **Start Command:** `npm run start`  
    - **Instance type:** Free (or paid).
 4. **Environment variables** (in the Web Service → **Environment**):  
