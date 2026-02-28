@@ -38,7 +38,6 @@ export default function App() {
                 {user.email_verified_at ? null : (
                   <span className="muted"> (unverified)</span>
                 )}
-                <Link to="/components">Components</Link>
                 <button type="button" onClick={handleLogout}>
                   Log out
                 </button>
@@ -47,7 +46,6 @@ export default function App() {
               <>
                 <Link to="/login">Log in</Link>
                 <Link to="/signup">Sign up</Link>
-                <Link to="/components">Components</Link>
               </>
             )
           )}

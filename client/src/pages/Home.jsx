@@ -1,50 +1,23 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchItems } from '../store/appSlice'
-import Table from '../components/Table'
-
-const COLUMNS = [
-  { key: 'id', label: 'ID' },
-  { key: 'name', label: 'Name' },
-  { key: 'created_at', label: 'Created' },
-]
-
-function formatDate(iso) {
-  if (!iso) return '—'
-  try {
-    const d = new Date(iso)
-    return Number.isNaN(d.getTime()) ? iso : d.toLocaleString()
-  } catch {
-    return iso
-  }
-}
+import {Link } from 'react-router-dom'
 
 export default function Home() {
-  const dispatch = useDispatch()
-  const { items, loading, error } = useSelector((state) => state.app)
-
-  useEffect(() => {
-    dispatch(fetchItems())
-  }, [dispatch])
-
-  const tableData = (items || []).map((item) => ({
-    ...item,
-    created_at: formatDate(item.created_at),
-  }))
 
   return (
     <main>
-      <h2>Items</h2>
-      {loading && <p>Loading…</p>}
-      {error && <p className="error">{error}</p>}
-      {!loading && !error && (
-        <Table
-          columns={COLUMNS}
-          data={tableData}
-          keyField="id"
-          emptyMessage="No items yet. Add some in the database."
-        />
-      )}
+      <h2>Home</h2>
+      <p>This is a template for a React app with a RESTful backend API and auth.</p>
+      <h3>Demos</h3>
+      <ul>
+        <li><Link to="/components">Components</Link></li>
+      </ul>
+      <h3>Features</h3>
+      <ul>
+        <li>React</li>
+        <li>Vite</li>
+        <li>Express</li>
+        <li>PostgreSQL</li>
+        <li>JWT</li>
+      </ul>
     </main>
   )
 }
