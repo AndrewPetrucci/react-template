@@ -1,8 +1,9 @@
+'use client'
 import { useEffect } from 'react'
+import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { fetchItems } from '../store/appSlice'
-import Table from '../components/Table'
+import { fetchItems } from '@/lib/appSlice'
+import Table from '@/components/Table'
 
 const ITEMS_COLUMNS = [
   { key: 'id', label: 'ID' },
@@ -37,7 +38,7 @@ export default function ComponentsDemo() {
     <main>
       <h2>UI components</h2>
       <p>
-        <Link to="/">← Home</Link>
+        <Link href="/">← Home</Link>
       </p>
 
       <section className="demo-section">

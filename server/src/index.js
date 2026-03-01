@@ -35,12 +35,25 @@ app.get('/api/health', (_, res) => {
   res.json({ status: 'ok' })
 })
 
-// Serve the built React app from client/dist when it exists (e.g. after npm run build)
+// Serve the built frontend: Next.js export (client/out) or legacy Vite (client/dist)
+const clientOut = path.join(__dirname, '../../client/out')
 const clientDist = path.join(__dirname, '../../client/dist')
-if (existsSync(clientDist)) {
-  app.use(express.static(clientDist))
-  app.get('*', (_, res) => {
-    res.sendFile(path.join(clientDist, 'index.html'))
+const staticDir = existsSync(clientOut) ? clientOut : clientDist
+const isNextExport = staticDir === clientOut
+if (staticDir) {
+  app.use(express.static(staticDir))
+  app.get('*', (req, res) => {
+    if (isNextExport) {
+      const subpath = req.path.replace(/^\//, '').split('?')[0] || ''
+      const htmlFile = subpath === '' ? 'index.html' : subpath + '.html'
+      const file = path.join(staticDir, htmlFile)
+      const fallback = existsSync(path.join(staticDir, '404.html'))
+        ? path.join(staticDir, '404.html')
+        : path.join(staticDir, 'index.html')
+      res.sendFile(existsSync(file) ? file : fallback)
+    } else {
+      res.sendFile(path.join(staticDir, 'index.html'))
+    }
   })
 }
 

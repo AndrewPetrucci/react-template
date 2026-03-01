@@ -1,15 +1,17 @@
-import { useState } from 'react'
+'use client'
+import { useState, Suspense } from 'react'
+import Link from 'next/link'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
-import { useSearchParams, useNavigate, Link } from 'react-router-dom'
-import { verifyEmail, clearError } from '../store/authSlice'
+import { verifyEmail, clearError } from '@/lib/authSlice'
 
-export default function VerifyEmail() {
-  const [searchParams] = useSearchParams()
+function VerifyEmailForm() {
+  const searchParams = useSearchParams()
   const token = searchParams.get('token')
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
   const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const router = useRouter()
   const { loading, error } = useSelector((state) => state.auth)
 
   const handleSubmit = async (e) => {
@@ -17,14 +19,14 @@ export default function VerifyEmail() {
     dispatch(clearError())
     if (password !== confirm) return
     const result = await dispatch(verifyEmail({ token, newPassword: password }))
-    if (!result.error) navigate('/')
+    if (!result.error) router.push('/')
   }
 
   if (!token) {
     return (
       <main>
         <p className="error">Missing verification token.</p>
-        <Link to="/">Home</Link>
+        <Link href="/">Home</Link>
       </main>
     )
   }
@@ -67,8 +69,16 @@ export default function VerifyEmail() {
         </button>
       </form>
       <p>
-        <Link to="/">Home</Link>
+        <Link href="/">Home</Link>
       </p>
     </main>
+  )
+}
+
+export default function VerifyEmail() {
+  return (
+    <Suspense fallback={<main><p>Loading…</p></main>}>
+      <VerifyEmailForm />
+    </Suspense>
   )
 }

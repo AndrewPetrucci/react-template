@@ -1,10 +1,12 @@
-import { useState } from 'react'
+'use client'
+import { useState, Suspense } from 'react'
+import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
-import { useSearchParams, Link } from 'react-router-dom'
-import { resetPassword, clearError } from '../store/authSlice'
+import { resetPassword, clearError } from '@/lib/authSlice'
 
-export default function ResetPassword() {
-  const [searchParams] = useSearchParams()
+function ResetPasswordForm() {
+  const searchParams = useSearchParams()
   const token = searchParams.get('token')
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
@@ -24,7 +26,7 @@ export default function ResetPassword() {
     return (
       <main>
         <p className="error">Missing reset token.</p>
-        <Link to="/forgot-password">Request a new link</Link>
+        <Link href="/forgot-password">Request a new link</Link>
       </main>
     )
   }
@@ -32,7 +34,7 @@ export default function ResetPassword() {
     return (
       <main>
         <p>Password has been reset.</p>
-        <Link to="/login">Log in</Link>
+        <Link href="/login">Log in</Link>
       </main>
     )
   }
@@ -74,8 +76,16 @@ export default function ResetPassword() {
         </button>
       </form>
       <p>
-        <Link to="/login">Back to login</Link>
+        <Link href="/login">Back to login</Link>
       </p>
     </main>
+  )
+}
+
+export default function ResetPassword() {
+  return (
+    <Suspense fallback={<main><p>Loading…</p></main>}>
+      <ResetPasswordForm />
+    </Suspense>
   )
 }

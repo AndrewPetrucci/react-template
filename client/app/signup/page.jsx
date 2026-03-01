@@ -1,33 +1,26 @@
+'use client'
 import { useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { forgotPassword, clearError } from '../store/authSlice'
+import { signup, clearError } from '@/lib/authSlice'
 
-export default function ForgotPassword() {
+export default function Signup() {
   const [email, setEmail] = useState('')
   const dispatch = useDispatch()
+  const router = useRouter()
   const { loading, error } = useSelector((state) => state.auth)
-  const [sent, setSent] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     dispatch(clearError())
-    const result = await dispatch(forgotPassword(email))
-    if (!result.error) setSent(true)
-  }
-
-  if (sent) {
-    return (
-      <main>
-        <p>If that email is registered, you will receive a reset link.</p>
-        <Link to="/login">Back to login</Link>
-      </main>
-    )
+    const result = await dispatch(signup({ email }))
+    if (!result.error) router.push('/check-email')
   }
 
   return (
     <main>
-      <h2>Forgot password</h2>
+      <h2>Sign up</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email">Email</label>
@@ -42,11 +35,11 @@ export default function ForgotPassword() {
         </div>
         {error && <p className="error">{error}</p>}
         <button type="submit" disabled={loading}>
-          {loading ? 'Sending…' : 'Send reset link'}
+          {loading ? 'Signing up…' : 'Sign up'}
         </button>
       </form>
       <p>
-        <Link to="/login">Back to login</Link>
+        Already have an account? <Link href="/login">Log in</Link>
       </p>
     </main>
   )

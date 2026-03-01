@@ -1,20 +1,22 @@
+'use client'
 import { useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate, Link } from 'react-router-dom'
-import { login, clearError } from '../store/authSlice'
+import { login, clearError } from '@/lib/authSlice'
 
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const router = useRouter()
   const { loading, error } = useSelector((state) => state.auth)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     dispatch(clearError())
     const result = await dispatch(login({ email, password }))
-    if (!result.error) navigate('/')
+    if (!result.error) router.push('/')
   }
 
   return (
@@ -44,7 +46,7 @@ export default function Login() {
           />
         </div>
         <p>
-          <Link to="/forgot-password">Forgot password?</Link>
+          <Link href="/forgot-password">Forgot password?</Link>
         </p>
         {error && <p className="error">{error}</p>}
         <button type="submit" disabled={loading}>
@@ -52,7 +54,7 @@ export default function Login() {
         </button>
       </form>
       <p>
-        No account? <Link to="/signup">Sign up</Link>
+        No account? <Link href="/signup">Sign up</Link>
       </p>
     </main>
   )
