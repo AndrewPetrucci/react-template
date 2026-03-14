@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchItems } from '@/lib/appSlice'
 import Table from '@/components/Table'
+import MarkdownContent from '@/components/MarkdownContent'
+import DocxViewer from '@/components/DocxViewer'
 
 const ITEMS_COLUMNS = [
   { key: 'id', label: 'ID' },
@@ -37,10 +39,6 @@ export default function ComponentsDemo() {
   return (
     <main>
       <h2>UI components</h2>
-      <p>
-        <Link href="/">← Home</Link>
-      </p>
-
       <section className="demo-section">
         <h3>Table</h3>
         <p>Items from the API rendered in a table.</p>
@@ -54,6 +52,32 @@ export default function ComponentsDemo() {
             emptyMessage="No items yet. Add some in the database."
           />
         )}
+      </section>
+
+      <section className="demo-section">
+        <h3>Markdown</h3>
+        <p>Renders markdown with headings, lists, code, and links.</p>
+        <MarkdownContent
+          content={`## Sample markdown
+
+**Bold** and *italic* text.
+
+- List item one
+- List item two
+
+\`inline code\` and a [link to home](/).
+
+\`\`\`js
+const greeting = "Hello, world!"
+\`\`\`
+`}
+        />
+      </section>
+
+      <section className="demo-section">
+        <h3>Document viewer</h3>
+        <p>Renders a .docx file (hw.docx) with docx-preview.</p>
+        <DocxViewer src="/hw.docx" />
       </section>
     </main>
   )

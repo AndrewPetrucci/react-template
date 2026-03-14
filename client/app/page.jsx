@@ -5,12 +5,9 @@ export default function Home() {
     <main>
       <h2>Home</h2>
       <p>This is a template for a React app with a RESTful backend API and auth.</p>
-      <h3>Demos</h3>
-      <ul>
-        <li>
-          <Link href="/components">Components</Link>
-        </li>
-      </ul>
+      <p>
+        <Link href="/readme">View project README</Link>
+      </p>
       <h3>Features</h3>
       <ul>
         <li>React</li>

@@ -13,12 +13,20 @@ body {
 }
 
 .app {
-  max-width: 640px;
   margin: 0 auto;
   padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+main {
+  width: 1000px;
+}
+
+
 header {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -36,6 +44,13 @@ header h1 {
 header h1 a {
   color: inherit;
   text-decoration: none;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
 }
 
 header nav {
@@ -147,3 +162,22 @@ li {
   margin-top: 0;
   font-size: 1.25rem;
 }
+
+
+/* DOCX viewer (docx-preview output) */
+.docx-viewer .docx-wrapper {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.docx-viewer table {
+  border-collapse: collapse;
+}
+
+.docx-viewer td,
+.docx-viewer th {
+  border: 1px solid #ddd;
+  padding: 4px 8px;
+}
+

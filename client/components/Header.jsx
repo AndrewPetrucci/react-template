@@ -18,17 +18,25 @@ export default function Header() {
   const handleLogout = () => dispatch(logout())
 
   return (
-    <header>
+    <header  className="header-nav">
       <h1>
         <Link href="/">React Redux PostgreSQL</Link>
       </h1>
-      <nav>
-        {meChecked &&
-          (user ? (
+        <nav className="nav-links">
+          <Link href="/readme">Readme</Link>
+          <Link href="/docx">Document</Link>
+          <Link href="/components">Components</Link>
+        </nav>
+        <nav className="nav-auth" aria-label="Account">
+          {!meChecked ? (
+            <>
+              <Link href="/login">Log in</Link>
+              <Link href="/signup">Sign up</Link>
+            </>
+          ) : user ? (
             <>
               <span>{user.email}</span>
               {user.email_verified_at ? null : <span className="muted"> (unverified)</span>}
-              <Link href="/components">Components</Link>
               <button type="button" onClick={handleLogout}>
                 Log out
               </button>
@@ -37,10 +45,9 @@ export default function Header() {
             <>
               <Link href="/login">Log in</Link>
               <Link href="/signup">Sign up</Link>
-              <Link href="/components">Components</Link>
             </>
-          ))}
-      </nav>
+          )}
+        </nav>
     </header>
   )
 }
