@@ -47,3 +47,22 @@
   color: #056;
   text-decoration: underline;
 }
+
+/* Dark mode */
+body[data-theme="dark"] .readme-content code {
+  background: #2d2d2d;
+  color: #e5e5e5;
+}
+
+body[data-theme="dark"] .readme-content pre {
+  background: #2d2d2d;
+  border: 1px solid #444;
+}
+
+body[data-theme="dark"] .readme-content pre code {
+  color: #e5e5e5;
+}
+
+body[data-theme="dark"] .readme-content a {
+  color: #7dd3fc;
+}

@@ -60,3 +60,9 @@
   color: #666;
   font-size: 0.9em;
 }
+
+/* Dark mode */
+body[data-theme="dark"] .header-nav nav a,
+body[data-theme="dark"] .header-nav nav button {
+  color: #7dd3fc;
+}

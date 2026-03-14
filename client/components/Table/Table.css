@@ -29,3 +29,22 @@
   margin: 1rem 0;
   color: #666;
 }
+
+/* Dark mode */
+body[data-theme="dark"] .table th,
+body[data-theme="dark"] .table td {
+  border-bottom-color: #444;
+}
+
+body[data-theme="dark"] .table th {
+  background: #2d2d2d;
+  color: #e5e5e5;
+}
+
+body[data-theme="dark"] .table tbody tr:hover {
+  background: #383838;
+}
+
+body[data-theme="dark"] .table-empty {
+  color: #9ca3af;
+}
