@@ -48,6 +48,42 @@ body[data-theme="dark"] .header-nav nav button {
   color: #7dd3fc;
 }
 
+body[data-theme="dark"] .table th,
+body[data-theme="dark"] .table td {
+  border-bottom-color: #444;
+}
+
+body[data-theme="dark"] .table th {
+  background: #2d2d2d;
+  color: #e5e5e5;
+}
+
+body[data-theme="dark"] .table tbody tr:hover {
+  background: #383838;
+}
+
+body[data-theme="dark"] .table-empty {
+  color: #9ca3af;
+}
+
+body[data-theme="dark"] .readme-content code {
+  background: #2d2d2d;
+  color: #e5e5e5;
+}
+
+body[data-theme="dark"] .readme-content pre {
+  background: #2d2d2d;
+  border: 1px solid #444;
+}
+
+body[data-theme="dark"] .readme-content pre code {
+  color: #e5e5e5;
+}
+
+body[data-theme="dark"] .readme-content a {
+  color: #7dd3fc;
+}
+
 .app {
   margin: 0 auto;
   padding: 2rem;
