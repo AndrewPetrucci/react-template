@@ -1,14 +1,18 @@
 # React Redux PostgreSQL
 
-Full-stack template: **React** (Next.js) + **Redux Toolkit** on the frontend, **Express** + **PostgreSQL** on the backend.
+Full-stack template: **React** (Next.js) + **Redux Toolkit** on the frontend, **Express** + **PostgreSQL** on the backend. Both **client and server** are written in **TypeScript**.
 
 ## Structure
 
-- `client/` — Next.js app (App Router, Redux Toolkit, React-Redux). Static export in `client/out`; Express serves it in production.
-- `server/` — Express API and PostgreSQL via `pg`
-  - `server/src/schema/` — Table schemas (column metadata + DDL). Each table has a folder (e.g. `items/index.js`) and shared helpers in `helpers.js`.
+- `client/` — Next.js app (App Router, **TypeScript**, Redux Toolkit, React-Redux). Static export in `client/out`; Express serves it in production.
+- `server/` — Express API and PostgreSQL via `pg` (**TypeScript**). Source in `server/src/`; compile with `npm run build` in `server/` (output in `server/dist/`). Table schemas in `server/src/schema/` (e.g. `items/index.ts`, `helpers.ts`).
 - `scripts/` — Installation scripts for Node, npm, and PostgreSQL
 - `e2e/` — Playwright end-to-end tests
+
+### TypeScript
+
+- **Client:** `client/tsconfig.json` (path alias `@/*` → `client/*`). A root `tsconfig.json` extends it so editors at repo root get JSX and paths.
+- **Server:** `server/tsconfig.json`; compiles to `server/dist/`. Dev runs with `tsx watch`; production runs `node dist/index.js` after `npm run build`.
 
 ## Prerequisites: Node, npm, PostgreSQL
 
@@ -80,7 +84,7 @@ Frontend routes: `/signup`, `/login`, `/verify-email?token=`, `/forgot-password`
 
 Table definitions live under `server/src/schema/`. Each table has a folder (e.g. `items/`) with an `index.js` that defines the table and reuses shared helpers.
 
-### Table schema file (e.g. `schema/items/index.js`)
+### Table schema file (e.g. `schema/items/index.ts`)
 
 - **`tableName`** — Table name string (e.g. `'items'`).
 - **`columns`** — Map of column name → metadata. Column metadata can include:
@@ -95,7 +99,7 @@ Table definitions live under `server/src/schema/`. Each table has a folder (e.g.
 - **`createTableSql`** — Generated `CREATE TABLE IF NOT EXISTS ...` from `tableName` and `columns`.
 - **`seedRows`** — Optional array of row arrays (one per column value in order) for initial seed when the table is empty.
 
-### Schema helpers (`schema/helpers.js`)
+### Schema helpers (`schema/helpers.ts`)
 
 - **`getOrderedColumnNames(columns)`** — Column names sorted by each column’s `order`.
 - **`getPrimaryKey(columns)`** — Primary key column name(s), ordered by `order` (single string or array for composite).
