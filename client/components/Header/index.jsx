@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchMe, logout } from '@/lib/authSlice'
 import ButtonList from '@/components/ButtonList'
-import './Header/Header.css'
+import './Header.css'
 
 const THEME_KEY = 'app-theme'
 const THEME_OPTIONS = [
@@ -48,7 +48,7 @@ export default function Header() {
       </h1>
       <nav className="nav-links">
         <Link href="/readme">Readme</Link>
-        <Link href="/docx">Resume</Link>
+        <Link href="/docx">Document</Link>
         <Link href="/components">Components</Link>
       </nav>
       <nav className="nav-auth" aria-label="Account">

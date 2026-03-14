@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
+import './DocxViewer.css'
 
 export default function DocxViewer({ src, className = '' }) {
   const containerRef = useRef(null)
@@ -46,10 +47,6 @@ export default function DocxViewer({ src, className = '' }) {
         className="docx-viewer"
         style={{
           minHeight: status === 'ok' ? 400 : 0,
-          background: '#fff',
-          padding: '1.5rem',
-          borderRadius: 8,
-          border: '1px solid #ddd',
         }}
       />
     </div>

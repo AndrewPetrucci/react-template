@@ -6,6 +6,7 @@ import { fetchItems } from '@/lib/appSlice'
 import Table from '@/components/Table'
 import MarkdownContent from '@/components/MarkdownContent'
 import DocxViewer from '@/components/DocxViewer'
+import ButtonList from '@/components/ButtonList'
 
 const ITEMS_COLUMNS = [
   { key: 'id', label: 'ID' },
@@ -71,6 +72,20 @@ export default function ComponentsDemo() {
 const greeting = "Hello, world!"
 \`\`\`
 `}
+        />
+      </section>
+
+      <section className="demo-section">
+        <h3>Button list</h3>
+        <p>Renders one button per item in an array.</p>
+        <ButtonList
+          items={[
+            { display: 'First', value: 'first', backgroundColor: '#2563eb', color: '#fff' },
+            { display: 'Second', value: 'second', backgroundColor: '#059669', color: '#fff' },
+            { display: 'Third', value: 'third', backgroundColor: '#d97706', color: '#fff' },
+            { display: 'Fourth', value: 'fourth', backgroundColor: '#dc2626', color: '#fff' },
+          ]}
+          onSelect={(item, index) => window.alert(`Clicked: ${item.display} (value: ${item.value})`)}
         />
       </section>
 

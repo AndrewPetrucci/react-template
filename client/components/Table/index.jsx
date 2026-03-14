@@ -1,3 +1,5 @@
+import './Table.css'
+
 /**
  * Reusable table component.
  */

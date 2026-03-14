@@ -1,5 +1,6 @@
 'use client'
 import ReactMarkdown from 'react-markdown'
+import './MarkdownContent.css'
 
 export default function MarkdownContent({ content }) {
   return (

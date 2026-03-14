@@ -1,0 +1,31 @@
+.table-wrapper {
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.table th,
+.table td {
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  font-weight: 600;
+  background: #eee;
+}
+
+.table tbody tr:hover {
+  background: #f9f9f9;
+}
+
+.table-empty {
+  margin: 1rem 0;
+  color: #666;
+}

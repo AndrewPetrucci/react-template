@@ -1,0 +1,49 @@
+.readme-content {
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.readme-content h1,
+.readme-content h2,
+.readme-content h3 {
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.readme-content h1 { font-size: 1.5rem; }
+.readme-content h2 { font-size: 1.25rem; }
+.readme-content h3 { font-size: 1.1rem; }
+
+.readme-content p {
+  margin: 0.75em 0;
+}
+
+.readme-content ul,
+.readme-content ol {
+  margin: 0.5em 0;
+  padding-left: 1.5em;
+}
+
+.readme-content code {
+  font-size: 0.9em;
+  background: #f0f0f0;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+}
+
+.readme-content pre {
+  overflow-x: auto;
+  padding: 1rem;
+  background: #f5f5f5;
+  border-radius: 6px;
+}
+
+.readme-content pre code {
+  background: none;
+  padding: 0;
+}
+
+.readme-content a {
+  color: #056;
+  text-decoration: underline;
+}

@@ -7,7 +7,7 @@ const DOCX_URL = '/Resume.docx'
 export default function DocxPage() {
   return (
     <main>
-      <h2>Document</h2>
+      <h2>Resume</h2>
       <p className="muted" style={{ marginBottom: '1rem' }}>
         Place .docx files in <code>client/public/</code> to serve them at <code>/filename.docx</code>.
       </p>
