@@ -13,7 +13,6 @@ body {
 }
 
 .app {
-  max-width: 640px;
   margin: 0 auto;
   padding: 2rem;
 }
@@ -56,6 +55,10 @@ header nav button {
   cursor: pointer;
   padding: 0;
   text-decoration: underline;
+}
+
+main {
+  width: 1000px;
 }
 
 .muted {

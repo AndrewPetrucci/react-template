@@ -1,0 +1,8 @@
+{
+  "extends": "./client/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": { "@/*": ["./client/*"] }
+  },
+  "include": ["client/**/*.ts", "client/**/*.tsx", "client/next-env.d.ts"]
+}

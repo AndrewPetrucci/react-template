@@ -1,14 +1,18 @@
 # React Redux PostgreSQL
 
-Full-stack template: **React** (Vite) + **Redux Toolkit** on the frontend, **Express** + **PostgreSQL** on the backend.
+Full-stack template: **React** (Next.js) + **Redux Toolkit** on the frontend, **Express** + **PostgreSQL** on the backend. Both **client and server** are written in **TypeScript**.
 
 ## Structure
 
-- `client/` — React app (Vite, Redux Toolkit, React-Redux)
-- `server/` — Express API and PostgreSQL via `pg`
-  - `server/src/schema/` — Table schemas (column metadata + DDL). Each table has a folder (e.g. `items/index.js`) and shared helpers in `helpers.js`.
+- `client/` — Next.js app (App Router, **TypeScript**, Redux Toolkit, React-Redux). Static export in `client/out`; Express serves it in production.
+- `server/` — Express API and PostgreSQL via `pg` (**TypeScript**). Source in `server/src/`; compile with `npm run build` in `server/` (output in `server/dist/`). Table schemas in `server/src/schema/` (e.g. `items/index.ts`, `helpers.ts`).
 - `scripts/` — Installation scripts for Node, npm, and PostgreSQL
 - `e2e/` — Playwright end-to-end tests
+
+### TypeScript
+
+- **Client:** `client/tsconfig.json` (path alias `@/*` → `client/*`). A root `tsconfig.json` extends it so editors at repo root get JSX and paths.
+- **Server:** `server/tsconfig.json`; compiles to `server/dist/`. Dev runs with `tsx watch`; production runs `node dist/index.js` after `npm run build`.
 
 ## Prerequisites: Node, npm, PostgreSQL
 
@@ -80,7 +84,7 @@ Frontend routes: `/signup`, `/login`, `/verify-email?token=`, `/forgot-password`
 
 Table definitions live under `server/src/schema/`. Each table has a folder (e.g. `items/`) with an `index.js` that defines the table and reuses shared helpers.
 
-### Table schema file (e.g. `schema/items/index.js`)
+### Table schema file (e.g. `schema/items/index.ts`)
 
 - **`tableName`** — Table name string (e.g. `'items'`).
 - **`columns`** — Map of column name → metadata. Column metadata can include:
@@ -95,7 +99,7 @@ Table definitions live under `server/src/schema/`. Each table has a folder (e.g.
 - **`createTableSql`** — Generated `CREATE TABLE IF NOT EXISTS ...` from `tableName` and `columns`.
 - **`seedRows`** — Optional array of row arrays (one per column value in order) for initial seed when the table is empty.
 
-### Schema helpers (`schema/helpers.js`)
+### Schema helpers (`schema/helpers.ts`)
 
 - **`getOrderedColumnNames(columns)`** — Column names sorted by each column’s `order`.
 - **`getPrimaryKey(columns)`** — Primary key column name(s), ordered by `order` (single string or array for composite).
@@ -113,8 +117,8 @@ The server runs `ensureDatabase()` then `ensureSchema()` at startup, which creat
 npm run dev
 ```
 
-- Frontend: http://localhost:5173  
-- API: http://localhost:3001 (proxied from client at `/api`)
+- Frontend: http://localhost:3000 (Next.js dev server; proxies `/api` to the Express server)
+- API: http://localhost:3001
 
 **Only client:** `npm run dev:client`  
 **Only server:** `npm run dev:server`
@@ -147,7 +151,7 @@ npm run build
 npm run start
 ```
 
-Then open **http://localhost:3001** — the Express server serves both the API and the built React app from `client/dist`. If you run `npm run start` without building first, port 3001 only serves the API (no `GET /`); use **http://localhost:5173** for the app during development.
+Then open **http://localhost:3001** — the Express server serves both the API and the built Next.js app from `client/out`. If you run `npm run start` without building first, port 3001 only serves the API (no `GET /`); use **http://localhost:3000** for the app during development (`npm run dev`).
 
 ## Hosting (so others can see it)
 
@@ -161,7 +165,7 @@ You need to run **one Node app** (the server) and give it a **PostgreSQL** datab
 3. **Create a Web Service**  
    **New +** → **Web Service** → connect your repo.  
    - **Root Directory:** leave blank.  
-   - **Build Command:** `npm run install:all && npm run build` (install:all installs client with devDependencies so Vite is available when Render sets NODE_ENV=production)  
+   - **Build Command:** `npm run install:all && npm run build` (builds Next.js static export to `client/out`)  
    - **Start Command:** `npm run start`  
    - **Instance type:** Free (or paid).
 4. **Environment variables** (in the Web Service → **Environment**):  
@@ -192,7 +196,7 @@ You need to run **one Node app** (the server) and give it a **PostgreSQL** datab
 
 ### Checklist for any host
 
-- **Build** the client before starting: `npm run build` (so `client/dist` exists). The server serves it automatically.
+- **Build** the client before starting: `npm run build` (produces `client/out`). The server serves it automatically.
 - **APP_URL** must be the exact URL people use (e.g. `https://myapp.onrender.com`) so verification and reset links work.
 - **JWT_SECRET** must be a strong random value in production.
 - **Database:** use the host’s Postgres URL; the server runs migrations (ensureSchema) on startup.

@@ -7,9 +7,9 @@
     "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
     "dev:client": "npm run dev --prefix client",
     "dev:server": "npm run dev --prefix server",
-    "build": "npm run build --prefix client",
+    "build": "npm run build --prefix client && npm run build --prefix server",
     "start": "npm run start --prefix server",
-    "install:all": "npm install && npm install --prefix client --include=dev && npm install --prefix server",
+    "install:all": "npm install && npm install --prefix client --include=dev && npm install --prefix server --include=dev",
     "e2e": "playwright test",
     "e2e:ui": "playwright test --ui"
   },

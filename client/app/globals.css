@@ -1,0 +1,109 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  color: #1a1a1a;
+  background: #f5f5f5;
+}
+
+/* Light mode (default) */
+body[data-theme="light"] {
+  color: #1a1a1a;
+  background: #f5f5f5;
+}
+
+/* Dark mode */
+body[data-theme="dark"] {
+  color: #e5e5e5;
+  background: #1a1a1a;
+}
+
+body[data-theme="dark"] .app,
+body[data-theme="dark"] main {
+  color: #e5e5e5;
+}
+
+body[data-theme="dark"] a {
+  color: #7dd3fc;
+}
+
+body[data-theme="dark"] .error {
+  color: #fca5a5;
+}
+
+body[data-theme="dark"] form input {
+  background: #333;
+  border: 1px solid #555;
+  color: #e5e5e5;
+}
+
+.app {
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+main {
+  width: 1000px;
+}
+
+.error {
+  color: #c00;
+}
+
+form div {
+  margin-bottom: 1rem;
+}
+
+form label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}
+
+form input {
+  width: 100%;
+  max-width: 20rem;
+  padding: 0.5rem;
+  font: inherit;
+}
+
+form button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  font: inherit;
+  cursor: pointer;
+}
+
+form button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.demo-section {
+  margin-top: 2rem;
+}
+
+.demo-section h3 {
+  margin-top: 0;
+  font-size: 1.25rem;
+}

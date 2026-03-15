@@ -1,0 +1,23 @@
+.docx-viewer {
+  min-height: 400px;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.docx-viewer .docx-wrapper {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.docx-viewer table {
+  border-collapse: collapse;
+}
+
+.docx-viewer td,
+.docx-viewer th {
+  border: 1px solid #ddd;
+  padding: 4px 8px;
+}

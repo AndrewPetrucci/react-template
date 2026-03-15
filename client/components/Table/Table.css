@@ -1,0 +1,50 @@
+.table-wrapper {
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.table th,
+.table td {
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  font-weight: 600;
+  background: #eee;
+}
+
+.table tbody tr:hover {
+  background: #f9f9f9;
+}
+
+.table-empty {
+  margin: 1rem 0;
+  color: #666;
+}
+
+/* Dark mode */
+body[data-theme="dark"] .table th,
+body[data-theme="dark"] .table td {
+  border-bottom-color: #444;
+}
+
+body[data-theme="dark"] .table th {
+  background: #2d2d2d;
+  color: #e5e5e5;
+}
+
+body[data-theme="dark"] .table tbody tr:hover {
+  background: #383838;
+}
+
+body[data-theme="dark"] .table-empty {
+  color: #9ca3af;
+}
